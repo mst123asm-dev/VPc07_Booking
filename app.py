@@ -371,6 +371,7 @@ class BookingApp:
                 f"Бронирование №{result.id} успешно создано.", "green"
             )
             self._load_data()
+            self._clear_booking_form()
         except ValueError as exc:
             self._show_msg(str(exc), "red")
         except LookupError as exc:
@@ -796,6 +797,17 @@ class BookingApp:
 
     def _show_msg(self, text: str, color: str) -> None:
         self._msg_label.config(text=text, foreground=color)
+
+    def _clear_booking_form(self) -> None:
+        """Очистить поля формы создания бронирования.
+
+        Сбрасывает поля, относящиеся исключительно к созданию новой записи.
+        Вызывается только после подтверждённого успешного создания
+        бронирования.
+        """
+        self._guests_entry.delete(0, tk.END)
+        self._start_entry.delete(0, tk.END)
+        self._end_entry.delete(0, tk.END)
 
     # ------------------------------------------------------------------
     # Window close
